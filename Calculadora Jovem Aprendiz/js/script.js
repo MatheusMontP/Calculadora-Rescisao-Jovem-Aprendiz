@@ -1,3 +1,4 @@
+//Funcao para calcular o valor das ferias se o aprendiz NAO TEVE FERIAS
 function calcularFeriasComVencidas (salarioBruto, mesesPosVencimento, mesesContrato) {
     const valorBase = mesesContrato - 12;
     const valorBaseFeriasProporcionais = (salarioBruto / 12) * valorBase;
@@ -8,24 +9,49 @@ function calcularFeriasComVencidas (salarioBruto, mesesPosVencimento, mesesContr
     const feriasVencidasEProporcionais = feriasProporcinaisComTerco + feriasVencidas;
     return feriasVencidasEProporcionais;
 }
-
+//Funcao para calcular o valor das ferias se o aprendiz TEVE FERIAS
 function calcularFeriasSemVencidas (salarioBruto, mesesPosVencimento) {
     const valorBase = mesesPosVencimento - 12;
     const valorBaseProporcional =  (salarioBruto / 12) * valorBase;
     const tercoDasProporcionais = valorBaseProporcional / 3;
     return valorBaseProporcional + tercoDasProporcionais;
-}
 
+}
+function calcularFeriasComVencidasSemJustaCausa (salarioBruto, mesesPosVencimento, mesesRestantes) {
+    const valorBase = mesesRestantes - 12;
+    const valorBaseFeriasProporcionais = (salarioBruto / 12) * valorBase;
+    
+    const tercoDasProporcionais = valorBaseFeriasProporcionais / 3;
+    const feriasProporcinaisComTerco = valorBaseFeriasProporcionais + tercoDasProporcionais;
+    
+    const feriasVencidas = (salarioBruto + salarioBruto / 3);
+    const feriasVencidasEProporcionais = feriasProporcinaisComTerco + feriasVencidas;
+    return feriasVencidasEProporcionais;
+}
+function calcularFeriasSemVencidasSemJustaCausa (salarioBruto, mesesPosVencimento, mesesRestantes) {
+    if (mesesRestantes <= 12) {
+        let valor = 0
+        return valor;
+    } else {
+        const valorBase = mesesRestantes - 12;
+        const valorBaseProporcional =  (salarioBruto / 12) * valorBase;
+        
+        const tercoDasProporcionais = valorBaseProporcional / 3;
+        return valorBaseProporcional + tercoDasProporcionais;
+    }
+}
+//Funcao para calcular o saldo salario referente ao ultimo mes de contrato
 function calcularSaldoSalario (salarioBruto, diasTrabalhados) {
     const resultado = (salarioBruto / 30) * diasTrabalhados;
     return resultado;
 }
 
+//Funcao para calcular o decimo terceiro
 function calcularDecimoTerceiro (salarioBruto, mesesTrabalhados) {
     const resultado = (salarioBruto / 12) * mesesTrabalhados;
     return resultado;
 }
-
+ //Funcao para calcular o FGTS se o aprendiz NAO TEVE FERIAS
 function calculoFgtsSemFerias (salarioBruto, mesesContrato, valorDecimoTerceiro, diasTrabalhadosMesRescisao) {
     const baseFgts = mesesContrato - 1;
     const baseFgtsBruto = (salarioBruto * baseFgts) * 0.02;
@@ -37,11 +63,26 @@ function calculoFgtsSemFerias (salarioBruto, mesesContrato, valorDecimoTerceiro,
     
     const base13Proporcional = valorDecimoTerceiro * 0.02;
     const FGTS13Salario = base13Proporcional;
-    
     return FGTS + FGTS13Salario;
 
 }
 
+function calculoFgtsSemFeriasSemJustaCausa (salarioBruto, mesesRestantes, valorDecimoTerceiro, diasTrabalhadosMesRescisao) {
+    const baseFgts = mesesRestantes;
+    const baseFgtsBruto = (salarioBruto * baseFgts) * 0.02;
+    
+
+    const baseUltimoMes = (salarioBruto / 30) * diasTrabalhadosMesRescisao;
+    const baseFgtsUltimoMes = baseUltimoMes * 0.02;
+    const FGTS = baseFgtsBruto + baseFgtsUltimoMes;
+    
+    const base13Proporcional = valorDecimoTerceiro * 0.02;
+    const FGTS13Salario = base13Proporcional;
+    return FGTS + FGTS13Salario;
+
+}
+
+//Funcao para calcular o FGTS se o aprendiz TEVE FERIAS
 function calculoFgtsComFerias (salarioBruto, mesesContrato, valorDecimoTerceiro, diasTrabalhadosMesRescisao) {
     const baseFgts = mesesContrato - 1;
     const baseFgtsBruto = (salarioBruto * 0.02) * baseFgts;
@@ -56,8 +97,20 @@ function calculoFgtsComFerias (salarioBruto, mesesContrato, valorDecimoTerceiro,
     return FGTS;
 }
 
+function indenizacaoComFerias (salarioBruto, mesesContrato, mesesRestantes) {
+    if (mesesContrato < mesesRestantes) {
+        alert("O total de meses trabalhados não pode ser inferior à duração do contrato.")
+    } else {
+        const totalRestante = mesesContrato - mesesRestantes
+        const valorIndenizacao = (salarioBruto * totalRestante) / 2;
+        return valorIndenizacao;
+    }
+    
+}
 
+//Funcao principal
 function calcularRescisao () {
+    const tipoDesligamentoSelect = document.getElementById('tipoDesligamento');
     const feriasSim = document.getElementById('feriasSim').checked;
     const feriasNao = document.getElementById('feriasNao').checked;
 
@@ -66,6 +119,7 @@ function calcularRescisao () {
     const mesesContrato = parseFloat(document.getElementById('mesesContrato').value);
     const meses13Salario = parseFloat(document.getElementById('13Salario').value);
     const mesesPosVencimento = parseInt(document.getElementById('mesesPosVencimento').value);
+    const mesesRestantes = parseFloat(document.getElementById("mesesTrabalhados").value);
     const tipoDesligamento = document.getElementById("tipoDesligamento").value;
 
     var valorSaldoSalario = 0;
@@ -73,39 +127,43 @@ function calcularRescisao () {
     let valorFerias = 0;
     let valorFGTS = 0;
 
-
-
-    if (isNaN(salarioBruto) || isNaN(diasTrabalhadosMesRescisao) || isNaN(meses13Salario)) {
+    if (isNaN(salarioBruto) || isNaN(diasTrabalhadosMesRescisao) || isNaN(meses13Salario) || isNaN(mesesContrato)) {
         alert("Por favor, preencha todos os campos corretamente.");
         return;
     }
-
+    if (meses13Salario < 0 || meses13Salario > 12) {
+        alert("MESES TRABALHADOS NO ÚLTIMO ANO: apenas números de 0 a 12.");
+        return;
+    }
+   if (diasTrabalhadosMesRescisao < 0 || diasTrabalhadosMesRescisao > 31) {
+        alert("DIAS TRABALHADOS NO MÊS DA RESCISÃO: apenas números de 0 a 31.");
+        return;
+    }
+    if (mesesContrato < 0 || mesesContrato > 24) {
+        alert("DURAÇÃO DO CONTRATO: apenas números de 0 a 24.");
+        return;
+    }
     if (tipoDesligamento === 'fimContrato') {
         if (feriasSim) {
-
             if(isNaN(mesesPosVencimento)) {
                 alert("Por favor, preencha todos os campos corretamente.")
             }
-            valorSaldoSalario = calcularSaldoSalario(salarioBruto, diasTrabalhadosMesRescisao);
-            valorDecimoTerceiro = calcularDecimoTerceiro(salarioBruto, meses13Salario);
-            valorFerias = calcularFeriasSemVencidas(salarioBruto, mesesContrato);
-            valorFGTS = calculoFgtsComFerias(salarioBruto, mesesContrato, valorDecimoTerceiro, diasTrabalhadosMesRescisao);
+            if (mesesPosVencimento < 0 || mesesPosVencimento > 12) {
+                alert("MESES TRABALHADOS APÓS O PRIMEIRO ANO DE CONTRATO: apenas números de 0 a 12.");
+                return;
+            }
 
-            let valorBase = valorSaldoSalario + valorDecimoTerceiro + valorFerias
-            let valorBaseDesconto = valorSaldoSalario + valorDecimoTerceiro 
-            let valorDesconto = valorBaseDesconto * 0.075
-            let valorFinal = valorBase - valorDesconto
+            valorSaldoSalario = parseFloat(calcularSaldoSalario(salarioBruto, diasTrabalhadosMesRescisao).toFixed(2));
+            valorDecimoTerceiro = parseFloat(calcularDecimoTerceiro(salarioBruto, meses13Salario).toFixed(2));
+            valorFerias = parseFloat(calcularFeriasSemVencidas(salarioBruto, mesesContrato).toFixed(2));
+            valorFGTS = parseFloat(calculoFgtsComFerias(salarioBruto, mesesContrato, valorDecimoTerceiro, diasTrabalhadosMesRescisao).toFixed(2));
+            let valorBase = parseFloat((valorSaldoSalario + valorDecimoTerceiro + valorFerias).toFixed(2));
+            let valorBaseDesconto = parseFloat((valorSaldoSalario + valorDecimoTerceiro).toFixed(2));
+            let valorDesconto = parseFloat((valorBaseDesconto * 0.075).toFixed(2));
+            let valorFinal = parseFloat((valorBase - valorDesconto).toFixed(2));
 
-            valorSaldoSalario = parseFloat(valorSaldoSalario.toFixed(2));
-            valorDecimoTerceiro = parseFloat(valorDecimoTerceiro.toFixed(2));
-            valorFerias = parseFloat(valorFerias.toFixed(2));
-            valorFGTS = parseFloat(valorFGTS.toFixed(2));
-            valorBase = parseFloat(valorBase.toFixed(2));
-            valorBaseDesconto = parseFloat(valorBaseDesconto.toFixed(2));
-            valorDesconto = parseFloat(valorDesconto.toFixed(2));
-            valorFinal = parseFloat(valorFinal.toFixed(2));
-
-
+            let valorIndenizacao = 0
+            document.getElementById('resIndenizacao').textContent = valorIndenizacao;
             document.getElementById('resSaldoSalario').textContent = valorSaldoSalario;
             document.getElementById('resDecimoTerceiro').textContent = valorDecimoTerceiro;
             document.getElementById('resFerias').textContent = valorFerias;
@@ -113,28 +171,18 @@ function calcularRescisao () {
             document.getElementById('resFGTS').textContent = valorFGTS;
             document.getElementById('resDesconto').textContent = valorDesconto;
             document.getElementById('resValorFinal').textContent = valorFinal;
-
-           console.log("O valor da rescisao e", valorFinal, "O valor do FGTS e", valorFGTS)
         } else if (feriasNao) {
-            valorSaldoSalario = calcularSaldoSalario(salarioBruto, diasTrabalhadosMesRescisao);
-            valorDecimoTerceiro = calcularDecimoTerceiro(salarioBruto, meses13Salario);
-            valorFerias = calcularFeriasComVencidas(salarioBruto, meses13Salario, mesesContrato)
-            valorFGTS = calculoFgtsSemFerias(salarioBruto, mesesContrato, valorDecimoTerceiro, diasTrabalhadosMesRescisao);
-            let valorBase = valorSaldoSalario + valorDecimoTerceiro + valorFerias
-            let valorBaseDesconto = valorSaldoSalario + valorDecimoTerceiro 
-            let valorDesconto = valorBaseDesconto * 0.075
-            let valorFinal = valorBase - valorDesconto
+            valorSaldoSalario = parseFloat(calcularSaldoSalario(salarioBruto, diasTrabalhadosMesRescisao).toFixed(2));
+            valorDecimoTerceiro = parseFloat(calcularDecimoTerceiro(salarioBruto, meses13Salario).toFixed(2));
+            valorFerias = parseFloat(calcularFeriasComVencidas(salarioBruto, meses13Salario, mesesContrato).toFixed(2));
+            valorFGTS = parseFloat(calculoFgtsSemFerias(salarioBruto, mesesContrato, valorDecimoTerceiro, diasTrabalhadosMesRescisao).toFixed(2));
+            let valorBase = parseFloat((valorSaldoSalario + valorDecimoTerceiro + valorFerias).toFixed(2));
+            let valorBaseDesconto = parseFloat((valorSaldoSalario + valorDecimoTerceiro).toFixed(2));
+            let valorDesconto = parseFloat((valorBaseDesconto * 0.075).toFixed(2));
+            let valorFinal = parseFloat((valorBase - valorDesconto).toFixed(2));
+            let valorIndenizacao = 0
 
-            valorSaldoSalario = parseFloat(valorSaldoSalario.toFixed(2));
-            valorDecimoTerceiro = parseFloat(valorDecimoTerceiro.toFixed(2));
-            valorFerias = parseFloat(valorFerias.toFixed(2));
-            valorFGTS = parseFloat(valorFGTS.toFixed(2));
-            valorBase = parseFloat(valorBase.toFixed(2));
-            valorBaseDesconto = parseFloat(valorBaseDesconto.toFixed(2));
-            valorDesconto = parseFloat(valorDesconto.toFixed(2));
-            valorFinal = parseFloat(valorFinal.toFixed(2));
-
-
+            document.getElementById('resIndenizacao').textContent = valorIndenizacao;
             document.getElementById('resSaldoSalario').textContent = valorSaldoSalario;
             document.getElementById('resDecimoTerceiro').textContent = valorDecimoTerceiro;
             document.getElementById('resFerias').textContent = valorFerias;
@@ -142,23 +190,87 @@ function calcularRescisao () {
             document.getElementById('resFGTS').textContent = valorFGTS;
             document.getElementById('resDesconto').textContent = valorDesconto;
             document.getElementById('resValorFinal').textContent = valorFinal;
-
-            console.log("O valor da rescisao e", valorFinal, "O valor do FGTS e", valorFGTS)
         } else {
             alert("Por favor, selecione se possui ou não férias vencidas.")
         }
         
+    } else if (tipoDesligamento === 'semJustaCausa') {
+        if(feriasSim) {
+            if (isNaN(mesesRestantes)) {
+                alert("Por favor, preencha todos os campos corretamente.");
+                return;
+            }
+            if (mesesRestantes < 0 || mesesRestantes > 24) {
+                alert("MESES TRABALHADOS: apenas números de 0 a 24.");
+                return;
+            }
+            valorSaldoSalario = parseFloat(calcularSaldoSalario(salarioBruto, diasTrabalhadosMesRescisao).toFixed(2));
+            valorDecimoTerceiro = parseFloat(calcularDecimoTerceiro(salarioBruto, meses13Salario).toFixed(2));
+            valorFerias = parseFloat(calcularFeriasSemVencidasSemJustaCausa(salarioBruto, mesesPosVencimento, mesesRestantes).toFixed(2));
+            valorFGTS = parseFloat(calculoFgtsSemFeriasSemJustaCausa(salarioBruto, mesesRestantes, valorDecimoTerceiro, diasTrabalhadosMesRescisao).toFixed(2));
+            valorIndenizacao = parseFloat(indenizacaoComFerias(salarioBruto, mesesContrato, mesesRestantes).toFixed(2))
+            
+
+            let valorBase = parseFloat((valorSaldoSalario + valorDecimoTerceiro + valorFerias + valorIndenizacao).toFixed(2));
+            let valorBaseDesconto = parseFloat((valorSaldoSalario + valorDecimoTerceiro).toFixed(2));
+            let valorDesconto = parseFloat((valorBaseDesconto * 0.075).toFixed(2));
+            let valorFinal = parseFloat((valorBase - valorDesconto).toFixed(2));
+            let valorFinalIndenizacao = parseFloat((valorFinal).toFixed(2));
+            
+
+            document.getElementById('resSaldoSalario').textContent = valorSaldoSalario;
+            document.getElementById('resDecimoTerceiro').textContent = valorDecimoTerceiro;
+            document.getElementById('resFerias').textContent = valorFerias;resIndenizacao
+            document.getElementById('resIndenizacao').textContent = valorIndenizacao;
+            document.getElementById('resValorBase').textContent = valorBase;
+            document.getElementById('resFGTS').textContent = valorFGTS;
+            document.getElementById('resDesconto').textContent = valorDesconto;
+            document.getElementById('resValorFinal').textContent = valorFinalIndenizacao;
+        } else if (feriasNao) {
+            if (isNaN(mesesRestantes)) {
+                alert("Por favor, preencha todos os campos corretamente.");
+                return;
+            }
+            if (mesesRestantes < 0 || mesesRestantes > 24) {
+                alert("MESES TRABALHADOS: apenas números de 0 a 24.");
+                return;
+            }
+
+            valorSaldoSalario = parseFloat(calcularSaldoSalario(salarioBruto, diasTrabalhadosMesRescisao).toFixed(2));
+            valorDecimoTerceiro = parseFloat(calcularDecimoTerceiro(salarioBruto, meses13Salario).toFixed(2));
+            valorFerias = parseFloat(calcularFeriasComVencidasSemJustaCausa(salarioBruto, mesesPosVencimento, mesesRestantes).toFixed(2));
+            valorFGTS = parseFloat(calculoFgtsSemFeriasSemJustaCausa(salarioBruto, mesesRestantes, valorDecimoTerceiro, diasTrabalhadosMesRescisao).toFixed(2));
+            valorIndenizacao = parseFloat(indenizacaoComFerias(salarioBruto, mesesContrato, mesesRestantes).toFixed(2))
+
+            let valorBase = parseFloat((valorSaldoSalario + valorDecimoTerceiro + valorFerias + valorIndenizacao).toFixed(2));
+            let valorBaseDesconto = parseFloat((valorSaldoSalario + valorDecimoTerceiro).toFixed(2));
+            let valorDesconto = parseFloat((valorBaseDesconto * 0.075).toFixed(2));
+            let valorFinal = parseFloat((valorBase - valorDesconto).toFixed(2));
+            let valorFinalIndenizacao = parseFloat((valorFinal).toFixed(2));
+            
+
+            document.getElementById('resSaldoSalario').textContent = valorSaldoSalario;
+            document.getElementById('resDecimoTerceiro').textContent = valorDecimoTerceiro;
+            document.getElementById('resFerias').textContent = valorFerias;resIndenizacao
+            document.getElementById('resIndenizacao').textContent = valorIndenizacao;
+            document.getElementById('resValorBase').textContent = valorBase;
+            document.getElementById('resFGTS').textContent = valorFGTS;
+            document.getElementById('resDesconto').textContent = valorDesconto;
+            document.getElementById('resValorFinal').textContent = valorFinalIndenizacao;
+        } else {
+            alert("testezaco")
+        }
+        
     } else if (tipoDesligamento === 'comJustaCausa') {
         alert("Codigo ainda nao implementado")
-    } else if (tipoDesligamento === 'semJustaCausa') {
-        alert("Codigo ainda nao implementado")
     } else {
-        alert("Codigo ainda nao implementado")
+        alert("Por favor, selecione um tipo de desligamento")
     }
     
     const totalRescisao = valorSaldoSalario + valorDecimoTerceiro + valorFerias;
 }
 
+//Fu
 function aparecerOpcoes () {
     const feriasSim = document.getElementById('feriasSim');
     const feriasNao = document.getElementById('feriasNao');
@@ -173,6 +285,27 @@ function aparecerOpcoes () {
         qntdFerias.value = ''; 
     }
 }
+
+function controlarVisibilidades() {
+    const tipoDesligamentoSelect = document.getElementById('tipoDesligamento');
+    const grupoMesesTrabalhados = document.getElementById('grupoMesesTrabalhados');
+    const inputMesesTrabalhados = document.getElementById('mesesTrabalhados')
+
+    if (tipoDesligamentoSelect.value === "semJustaCausa") {
+        grupoMesesTrabalhados.style.display = 'block';
+        inputMesesTrabalhados.focus();
+    } else {
+        grupoMesesTrabalhados.style.display = 'none';
+        inputMesesTrabalhados.value = '';
+    }
+}
+const tipoDesligamento = document.getElementById('tipoDesligamento');
+tipoDesligamento.addEventListener('change', controlarVisibilidades);
+controlarVisibilidades();
+
+const feriasSim = document.getElementById('feriasSim');
 feriasSim.addEventListener('change', aparecerOpcoes);
+const feriasNao = document.getElementById('feriasNao'); 
 feriasNao.addEventListener('change', aparecerOpcoes);
-aparecerOpcoes(); 
+
+aparecerOpcoes();

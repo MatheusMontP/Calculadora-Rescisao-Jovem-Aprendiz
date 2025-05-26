@@ -43,14 +43,14 @@ body {
 #formulario > div {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
-
 .titulo,
-#formulario > div:nth-child(2), 
+#formulario > div:nth-child(2),
 .ferias,
 #qntdFeriasGrupo,
+#grupoMesesTrabalhados,
 .botao,
 #resultadosDecisao {
     grid-column: 1 / -1;
@@ -61,6 +61,9 @@ body {
     font-size: 0.9em;
     color: #333;
     margin-bottom: 0;
+}
+#qntdFeriasGrupo {
+    display: none;
 }
 
 #formulario input[type="number"],
@@ -89,10 +92,6 @@ body {
     align-items: center;
     margin-right: 10px;
     font-size: 0.9em;
-}
-
-#qntdFeriasGrupo {
-    display: none;
 }
 
 #resultadosDecisao {
@@ -125,15 +124,6 @@ body {
         grid-template-columns: 1fr;
         gap: 15px 0;
         padding: 15px;
-    }
-
-    .titulo,
-    #formulario > div:nth-child(2),
-    .ferias,
-    #qntdFeriasGrupo,
-    .botao,
-    #resultadosDecisao {
-        grid-column: 1 / -1;
     }
 
     #formulario input[type="number"],

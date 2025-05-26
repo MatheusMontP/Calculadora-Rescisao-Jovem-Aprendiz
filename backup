@@ -1,0 +1,6 @@
+function indenizacaoComFerias (salarioBruto, mesesContrato, mesesRestantes) {
+    const totalRestante = mesesContrato - mesesRestantes
+    const valorIndenizacao = (salarioBruto * totalRestante) / 2;
+    return valorIndenizacao;
+}
+
