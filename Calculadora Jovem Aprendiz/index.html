@@ -4,52 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Rescisão Jovem Aprendiz</title>
+    <title>Calculadora de Rescisão - Jovem Aprendiz</title>
 </head>
 <body>
-    <form id = "formulario">
-        <h1>Calculadora Rescisão Jovem Aprendiz</h1>
+    <form id="formulario">
+        <div class="titulo">
+            <h2>Calculadora de Rescisão para Jovem Aprendiz</h2>
+        </div>
         <div>
-            <label for="tipoDesligamento">Tipo de desligamento: </label>
-            <select name="" id="tipoDesligamento">
-                <option value="opcaoDisabled" disabled selected>-- Selecione uma opção aqui --</option>
-                <option value="fimContrato">Desligamento por fim de contrato</option>
-                <option value="semJustaCausa">Desligamento sem justa causa</option>
-                <option value="comJustaCausa">Desligamento com justa causa</option>
+            <label for="tipoDesligamento">Tipo de desligamento:</label>
+            <select id="tipoDesligamento" required>
+                <option value="opcaoDisabled" disabled selected>-- Selecione uma opção --</option>
+                <option value="fimContrato">Término do contrato</option>
+                <option value="semJustaCausa">Demissão sem justa causa</option>
+                <option value="comJustaCausa">Demissão por justa causa</option>
             </select>
         </div>
-        <div class = "salario">
-            <label for="salarioBruto">Salário bruto: </label>
+
+        <div class="salario">
+            <label for="salarioBruto">Salário bruto (R$):</label>
             <input type="number" name="salarioBruto" id="salarioBruto" placeholder="Ex: 1400" required min="0">
         </div>
-        <div class = "mesesContrato">
-            <label for="">Contrato de quantos meses?: </label>
-            <input type="number" name="mesesContrato" id="mesesContrato" placeholder="Insira aqui" min = "12">
+
+        <div class="13Salario">
+            <label for="13Salario">Meses trabalhados no último ano do contrato:</label>
+            <input type="number" name="13Salario" id="13Salario" placeholder="Ex: 8" min="0" required>
         </div>
-        <div class = "ferias">
-            <label for="">Usufluiu de ferias?
-                <input type="radio" name="ferias" value="sim" id="feriasSim" required>Sim
+
+        <div class="ferias">
+            <p>O aprendiz usufruiu das férias?</p>
+            <label>
+                <input type="radio" name="ferias" value="sim" id="feriasSim" required> Sim
             </label>
-            <label for="">
-                <input type="radio" name="ferias" value="nao" id="feriasNao" required>Não
+            <label>
+                <input type="radio" name="ferias" value="nao" id="feriasNao" required> Não
             </label>
         </div>
-        <div id = "qntdFeriasGrupo">
-            <label for="qntdFeriasIn">Meses trabalhados após o primeiro ano de contrato: </label>
-            <input type="number" name="qntdFeriasInput" id="mesesPosVencimento" min = "0" placeholder="Insira aqui" required maxlength="31" >             
+
+        <div id="qntdFeriasGrupo">
+            <label for="mesesPosVencimento">Meses trabalhados após o primeiro ano de contrato:</label>
+            <input type="number" name="qntdFeriasInput" id="mesesPosVencimento" placeholder="Ex: 3" min="0" required>
         </div>
-        <div class = "diasTrabalhados">
-            <label for="diasRescisaoInput">Dias trabalhados no mês da rescisão: </label>
-            <input type="number" name="diasRescisaoInput" id="diasRescisaoInput" min = "0" placeholder="Insira aqui" required maxlength="31" >
+
+        <div class="diasTrabalhados">
+            <label for="diasRescisaoInput">Dias trabalhados no mês da rescisão:</label>
+            <input type="number" name="diasRescisaoInput" id="diasRescisaoInput" placeholder="Ex: 15" min="0"  required>
         </div>
-        <div class = "13Salario">
-            <label for="13Salario">Meses trabalhados no ultimo ano de contrato: </label>
-            <input type="number" name="13Salario" id="13Salario" placeholder="Insira aqui" required min = "0" >
-        </div>          
-        <button type = "button" onclick="calcularRescisao()">Calcular</button>
+
+        
+        <div class="mesesContrato">
+            <label for="mesesContrato">Duração do contrato (em meses):</label>
+            <input type="number" name="mesesContrato" id="mesesContrato" placeholder="Ex: 12" min="12" required>
+        </div>
+        <button class="botao" type="button" onclick="calcularRescisao()">Calcular</button>
+        <div id="resultadosDecisao" class="resultadosDecisao">
+            <h2>Resultados da Rescisão</h2>
+            <p>Saldo de Salário: R$ <span id="resSaldoSalario"></span></p>
+            <p>13º Salário Proporcional: R$ <span id="resDecimoTerceiro"></span></p>
+            <p>Férias + 1/3: R$ <span id="resFerias"></span></p>
+            <p><strong>Total Bruto das Verbas: R$ <span id="resValorBase"></span></strong></p>
+            <p>FGTS (Estimativa para Saque): R$ <span id="resFGTS"></span></p>
+            <p>Desconto (INSS aproximado sobre Saldo e 13º): R$ <span id="resDesconto"></span></p>
+            <p><strong>Valor Líquido Estimado a Receber: R$ <span id="resValorFinal"></span></strong></p>
+            <p class="observacao" style="font-size: 0.8em; margin-top: 10px;">
+                Atenção: os valores apresentados são estimativas. Para obter um cálculo preciso e evitar inconsistências, recomenda-se a análise de um profissional de Recursos Humanos ou contador.
+            </p>
+</div>
+    </div>
     </form>
-    
-    <p>Esta ferramenta é só para simulações. Cálculos de rescisão reais exigem um profissional qualificado ou sistema de RH para evitar erros e problemas legais.</p>
+
+
+
     <script src="js/script.js"></script>
 </body>
 </html>

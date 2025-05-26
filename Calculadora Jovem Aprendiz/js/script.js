@@ -91,10 +91,28 @@ function calcularRescisao () {
             valorFerias = calcularFeriasSemVencidas(salarioBruto, mesesContrato);
             valorFGTS = calculoFgtsComFerias(salarioBruto, mesesContrato, valorDecimoTerceiro, diasTrabalhadosMesRescisao);
 
-            const valorBase = valorSaldoSalario + valorDecimoTerceiro + valorFerias
-            const valorBaseDesconto = valorSaldoSalario + valorDecimoTerceiro 
-            const valorDesconto = valorBaseDesconto * 0.075
-            const valorFinal = valorBase - valorDesconto
+            let valorBase = valorSaldoSalario + valorDecimoTerceiro + valorFerias
+            let valorBaseDesconto = valorSaldoSalario + valorDecimoTerceiro 
+            let valorDesconto = valorBaseDesconto * 0.075
+            let valorFinal = valorBase - valorDesconto
+
+            valorSaldoSalario = parseFloat(valorSaldoSalario.toFixed(2));
+            valorDecimoTerceiro = parseFloat(valorDecimoTerceiro.toFixed(2));
+            valorFerias = parseFloat(valorFerias.toFixed(2));
+            valorFGTS = parseFloat(valorFGTS.toFixed(2));
+            valorBase = parseFloat(valorBase.toFixed(2));
+            valorBaseDesconto = parseFloat(valorBaseDesconto.toFixed(2));
+            valorDesconto = parseFloat(valorDesconto.toFixed(2));
+            valorFinal = parseFloat(valorFinal.toFixed(2));
+
+
+            document.getElementById('resSaldoSalario').textContent = valorSaldoSalario;
+            document.getElementById('resDecimoTerceiro').textContent = valorDecimoTerceiro;
+            document.getElementById('resFerias').textContent = valorFerias;
+            document.getElementById('resValorBase').textContent = valorBase;
+            document.getElementById('resFGTS').textContent = valorFGTS;
+            document.getElementById('resDesconto').textContent = valorDesconto;
+            document.getElementById('resValorFinal').textContent = valorFinal;
 
            console.log("O valor da rescisao e", valorFinal, "O valor do FGTS e", valorFGTS)
         } else if (feriasNao) {
@@ -102,10 +120,28 @@ function calcularRescisao () {
             valorDecimoTerceiro = calcularDecimoTerceiro(salarioBruto, meses13Salario);
             valorFerias = calcularFeriasComVencidas(salarioBruto, meses13Salario, mesesContrato)
             valorFGTS = calculoFgtsSemFerias(salarioBruto, mesesContrato, valorDecimoTerceiro, diasTrabalhadosMesRescisao);
-            const valorBase = valorSaldoSalario + valorDecimoTerceiro + valorFerias
-            const valorBaseDesconto = valorSaldoSalario + valorDecimoTerceiro 
-            const valorDesconto = valorBaseDesconto * 0.075
-            const valorFinal = valorBase - valorDesconto
+            let valorBase = valorSaldoSalario + valorDecimoTerceiro + valorFerias
+            let valorBaseDesconto = valorSaldoSalario + valorDecimoTerceiro 
+            let valorDesconto = valorBaseDesconto * 0.075
+            let valorFinal = valorBase - valorDesconto
+
+            valorSaldoSalario = parseFloat(valorSaldoSalario.toFixed(2));
+            valorDecimoTerceiro = parseFloat(valorDecimoTerceiro.toFixed(2));
+            valorFerias = parseFloat(valorFerias.toFixed(2));
+            valorFGTS = parseFloat(valorFGTS.toFixed(2));
+            valorBase = parseFloat(valorBase.toFixed(2));
+            valorBaseDesconto = parseFloat(valorBaseDesconto.toFixed(2));
+            valorDesconto = parseFloat(valorDesconto.toFixed(2));
+            valorFinal = parseFloat(valorFinal.toFixed(2));
+
+
+            document.getElementById('resSaldoSalario').textContent = valorSaldoSalario;
+            document.getElementById('resDecimoTerceiro').textContent = valorDecimoTerceiro;
+            document.getElementById('resFerias').textContent = valorFerias;
+            document.getElementById('resValorBase').textContent = valorBase;
+            document.getElementById('resFGTS').textContent = valorFGTS;
+            document.getElementById('resDesconto').textContent = valorDesconto;
+            document.getElementById('resValorFinal').textContent = valorFinal;
 
             console.log("O valor da rescisao e", valorFinal, "O valor do FGTS e", valorFGTS)
         } else {
