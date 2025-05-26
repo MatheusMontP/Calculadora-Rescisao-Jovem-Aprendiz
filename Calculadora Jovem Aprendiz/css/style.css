@@ -1,0 +1,10 @@
+body {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+*qntdFeriasGrupo {
+    display: none;
+    margin-top: 3px;
+}
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Rescisão Jovem Aprendiz</title>
+</head>
+<body>
+    <form id = "formulario">
+        <h1>Calculadora Rescisão Jovem Aprendiz</h1>
+        <div>
+            <label for="tipoDesligamento">Tipo de desligamento: </label>
+            <select name="" id="tipoDesligamento">
+                <option value="opcaoDisabled" disabled selected>-- Selecione uma opção aqui --</option>
+                <option value="fimContrato">Desligamento por fim de contrato</option>
+                <option value="semJustaCausa">Desligamento sem justa causa</option>
+                <option value="comJustaCausa">Desligamento com justa causa</option>
+            </select>
+        </div>
+        <div class = "salario">
+            <label for="salarioBruto">Salário bruto: </label>
+            <input type="number" name="salarioBruto" id="salarioBruto" placeholder="Ex: 1400" required min="0">
+        </div>
+        <div class = "mesesContrato">
+            <label for="">Contrato de quantos meses?: </label>
+            <input type="number" name="mesesContrato" id="mesesContrato" placeholder="Insira aqui" min = "12">
+        </div>
+        <div class = "ferias">
+            <label for="">Usufluiu de ferias?
+                <input type="radio" name="ferias" value="sim" id="feriasSim" required>Sim
+            </label>
+            <label for="">
+                <input type="radio" name="ferias" value="nao" id="feriasNao" required>Não
+            </label>
+        </div>
+        <div id = "qntdFeriasGrupo">
+            <label for="qntdFeriasIn">Meses trabalhados após o primeiro ano de contrato: </label>
+            <input type="number" name="qntdFeriasInput" id="mesesPosVencimento" min = "0" placeholder="Insira aqui" required maxlength="31" >             
+        </div>
+        <div class = "diasTrabalhados">
+            <label for="diasRescisaoInput">Dias trabalhados no mês da rescisão: </label>
+            <input type="number" name="diasRescisaoInput" id="diasRescisaoInput" min = "0" placeholder="Insira aqui" required maxlength="31" >
+        </div>
+        <div class = "13Salario">
+            <label for="13Salario">Meses trabalhados no ultimo ano de contrato: </label>
+            <input type="number" name="13Salario" id="13Salario" placeholder="Insira aqui" required min = "0" >
+        </div>          
+        <button type = "button" onclick="calcularRescisao()">Calcular</button>
+    </form>
+    
+    <p>Esta ferramenta é só para simulações. Cálculos de rescisão reais exigem um profissional qualificado ou sistema de RH para evitar erros e problemas legais.</p>
+    <script src="js/script.js"></script>
+</body>
+</html>
