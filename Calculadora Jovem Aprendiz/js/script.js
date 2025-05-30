@@ -153,10 +153,10 @@ function calcularRescisao () {
     }
     if (tipoDesligamento === 'fimContrato') {
         if (feriasSim) {
-            if(isNaN(mesesPosVencimento)) {
+            if(isNaN(mesesContrato)) {
                 alert("Por favor, preencha todos os campos corretamente.")
             }
-            if (mesesPosVencimento < 0 || mesesPosVencimento > 12) {
+            if (mesesContrato < 0 || mesesContrato > 24) {
                 alert("MESES TRABALHADOS APÓS O PRIMEIRO ANO DE CONTRATO: apenas números de 0 a 12.");
                 return;
             }
@@ -263,7 +263,7 @@ function calcularRescisao () {
             document.getElementById('resDesconto').textContent = valorDesconto;
             document.getElementById('resValorFinal').textContent = valorFinalIndenizacao;
         } else {
-            alert("Por favor, selecione se possui ou não férias vencidas.")
+            alert("Por favor, selecione se possui ou não férias vencidas.");
         }
         
     } else if (tipoDesligamento === 'comJustaCausa') {
@@ -325,10 +325,70 @@ function calcularRescisao () {
             document.getElementById('resFGTS').textContent = valorFGTS;
             document.getElementById('resDesconto').textContent = valorDesconto;
             document.getElementById('resValorFinal').textContent = valorFinal;
+        } else {
+            alert("Por favor, selecione se possui ou não férias vencidas.");
         }
     } else if (tipoDesligamento === 'pedidoDemissao') {
         if (feriasSim) {
+            if (isNaN(mesesPosVencimento)) {
+                alert("Por favor, preencha todos os campos corretamente.");
+                return;
+            }
+            if (mesesPosVencimento < 0 || mesesPosVencimento > 12) {
+                alert("MESES TRABALHADOS: apenas números de 0 a 24.");
+                return;
+            }
 
+            valorSaldoSalario = parseFloat(calcularSaldoSalario(salarioBruto, diasTrabalhadosMesRescisao).toFixed(2));
+            valorDecimoTerceiro = parseFloat(calcularDecimoTerceiro(salarioBruto, meses13Salario).toFixed(2));
+            valorFerias = parseFloat(calcularFeriasSemVencidasSemJustaCausa(salarioBruto, mesesPosVencimento, mesesRestantes).toFixed(2));
+            valorFGTS = 0;
+            valorIndenizacao = 0
+            let valorBase = parseFloat((valorSaldoSalario + valorDecimoTerceiro + valorFerias).toFixed(2));
+            let valorBaseDesconto = parseFloat((valorSaldoSalario + valorDecimoTerceiro).toFixed(2));
+            let valorDesconto = parseFloat((valorBaseDesconto * 0.075).toFixed(2));
+            let valorFinal = parseFloat((valorBase - valorDesconto).toFixed(2));
+            
+            document.getElementById('resSaldoSalario').textContent = valorSaldoSalario;
+            document.getElementById('resDecimoTerceiro').textContent = valorDecimoTerceiro;
+            document.getElementById('resFerias').textContent = valorFerias;resIndenizacao
+            document.getElementById('resIndenizacao').textContent = valorIndenizacao;
+            document.getElementById('resValorBase').textContent = valorBase;
+            document.getElementById('resFGTS').textContent = valorFGTS;
+            document.getElementById('resDesconto').textContent = valorDesconto;
+            document.getElementById('resValorFinal').textContent = valorFinal;
+
+        } else if (feriasNao) {
+            if (isNaN(mesesRestantes)) {
+                alert("Por favor, preencha todos os campos corretamente.");
+                return;
+            }
+            if (mesesRestantes < 0 || mesesRestantes > 24) {
+                alert("MESES TRABALHADOS: apenas números de 0 a 24.");
+                return;
+            }
+
+            valorSaldoSalario = parseFloat(calcularSaldoSalario(salarioBruto, diasTrabalhadosMesRescisao).toFixed(2));
+            valorDecimoTerceiro = parseFloat(calcularDecimoTerceiro(salarioBruto, meses13Salario).toFixed(2));
+            valorFerias = parseFloat(calcularFeriasComVencidasSemJustaCausa(salarioBruto, mesesPosVencimento, mesesRestantes).toFixed(2));
+            valorFGTS = 0;
+            valorIndenizacao = 0;
+
+            let valorBase = parseFloat((valorSaldoSalario + valorDecimoTerceiro + valorFerias).toFixed(2));
+            let valorBaseDesconto = parseFloat((valorSaldoSalario + valorDecimoTerceiro).toFixed(2));
+            let valorDesconto = parseFloat((valorBaseDesconto * 0.075).toFixed(2));
+            let valorFinal = parseFloat((valorBase - valorDesconto).toFixed(2));
+
+            document.getElementById('resSaldoSalario').textContent = valorSaldoSalario;
+            document.getElementById('resDecimoTerceiro').textContent = valorDecimoTerceiro;
+            document.getElementById('resFerias').textContent = valorFerias;resIndenizacao
+            document.getElementById('resIndenizacao').textContent = valorIndenizacao;
+            document.getElementById('resValorBase').textContent = valorBase;
+            document.getElementById('resFGTS').textContent = valorFGTS;
+            document.getElementById('resDesconto').textContent = valorDesconto;
+            document.getElementById('resValorFinal').textContent = valorFinal;
+        } else {
+            alert("Por favor, selecione se possui ou não férias vencidas.");
         }
     } else {
         alert("Por favor, selecione um tipo de desligamento");
@@ -358,7 +418,7 @@ function controlarVisibilidades() {
     const grupoMesesTrabalhados = document.getElementById('grupoMesesTrabalhados');
     const inputMesesTrabalhados = document.getElementById('mesesTrabalhados')
 
-    if (tipoDesligamentoSelect.value === "semJustaCausa" || tipoDesligamentoSelect.value === "comJustaCausa") {
+    if (tipoDesligamentoSelect.value === "semJustaCausa" || tipoDesligamentoSelect.value === "comJustaCausa" || tipoDesligamentoSelect.value === "pedidoDemissao") {
         grupoMesesTrabalhados.style.display = 'block';
         inputMesesTrabalhados.focus();
     } else {
