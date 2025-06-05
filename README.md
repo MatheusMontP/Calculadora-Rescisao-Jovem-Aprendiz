@@ -31,7 +31,7 @@ Este projeto é uma calculadora web desenvolvida para estimar os valores a serem
 
 ## 🚀 Como Usar / Demonstração
 
-[Você pode testar a calculadora aqui: seusite.com]
+Você pode testar a calculadora aqui: https://calculadorajovemaprendiz.netlify.app/
 
 **Para usar:**
 1.  Acesse o site da calculadora.
