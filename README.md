@@ -41,7 +41,6 @@ Este projeto é uma calculadora web desenvolvida para estimar os valores a serem
 5.  Clique no botão "Calcular".
 6.  Os resultados detalhados da simulação da rescisão serão exibidos na tela.
 
-[Opcional: Adicione um GIF ou Screenshot da sua calculadora em ação aqui]
 ## 📝 Lógica de Cálculo (Principais Verbas Consideradas)
 
 A calculadora estima as seguintes verbas, conforme a legislação aplicável ao Jovem Aprendiz:
@@ -58,8 +57,7 @@ A calculadora estima as seguintes verbas, conforme a legislação aplicável ao 
 Os cálculos fornecidos por esta ferramenta são **estimativas** baseadas nas informações inseridas pelo usuário e na interpretação da legislação trabalhista vigente para contratos de Jovem Aprendiz.
 Esta calculadora **não substitui** o cálculo oficial realizado pelo departamento de Recursos Humanos da empresa ou por um profissional contador. Recomenda-se sempre a conferência dos valores por um profissional qualificado para garantir a precisão e conformidade legal.
 
-## 🔮 Melhorias Futuras (Opcional)
-
+## 🔮 Melhorias Futuras
 * Permitir salvar ou imprimir o resultado da simulação
 * Melhorar o design
 
