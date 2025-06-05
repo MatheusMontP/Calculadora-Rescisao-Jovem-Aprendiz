@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Calculadora de Rescisão para Jovem Aprendiz</title>
+</head>
+<body>
+    <form id="formulario">
+        <div class="titulo">
+            <h2>Calculadora de Rescisão para Jovem Aprendiz</h2>
+        </div>
+        <div>
+            <label for="tipoDesligamento">Tipo de desligamento:</label>
+            <select id="tipoDesligamento" required>
+                <option value="opcaoDisabled" disabled selected>-- Selecione uma opção --</option>
+                <option value="fimContrato">Término do contrato</option>
+                <option value="semJustaCausa" id="semJustaCausa">Demissão sem justa causa</option>
+                <option value="comJustaCausa">Demissão por justa causa</option>
+                <option value="pedidoDemissao">Pedido de demissão</option>
+            </select>
+        </div>
+        <div class="salario">
+            <label for="salarioBruto">Salário bruto (R$):</label>
+            <input type="number" name="salarioBruto" id="salarioBruto" placeholder="Ex: 1400" required min="0">
+        </div>
+
+        <div class="13Salario">
+            <label for="13Salario">Meses trabalhados no último ano civil:</label>
+            <input type="number" name="13Salario" id="13Salario" placeholder="Ex: 8" min="0" required>
+        </div>
+
+        <div class="ferias">
+            <p>O aprendiz já tirou as férias?</p>
+            <label>
+                <input type="radio" name="ferias" value="sim" id="feriasSim" required> Sim
+            </label>
+            <label>
+                <input type="radio" name="ferias" value="nao" id="feriasNao" required> Não
+            </label>
+        </div>
+
+        <div id="qntdFeriasGrupo">
+            <label for="mesesPosVencimento">Meses trabalhados após as férias tiradas:</label>
+            <input type="number" name="qntdFeriasInput" id="mesesPosVencimento" placeholder="Ex: 3" min="0" required>
+        </div>
+
+        <div class="diasTrabalhados">
+            <label for="diasRescisaoInput">Dias trabalhados no mês da rescisão:</label>
+            <input type="number" name="diasRescisaoInput" id="diasRescisaoInput" placeholder="Ex: 15" min="0"  required>
+        </div>
+        <div class="mesesContrato">
+            <label for="mesesContrato">Duração do contrato (em meses):</label>
+            <input type="number" name="mesesContrato" id="mesesContrato" placeholder="Ex: 12" min="12" required>
+        </div>
+        <div id="grupoMesesTrabalhados" style="display: none;">
+            <label for="totalMesesTrabalhados">Total de meses trabalhados no contrato (até a demissão):</label>
+            <input type="number" name="totalMesesTrabalhados" id="mesesTrabalhados" placeholder="Ex: 10">
+        </div>
+        <button class="botao" type="button" onclick="calcularRescisao()">Calcular</button>
+        <div id="resultadosDecisao" class="resultadosDecisao">
+            <h2>Resultados da Rescisão</h2>
+            <p>Saldo de Salário: R$ <span id="resSaldoSalario"></span></p>
+            <p>13º Salário Proporcional: R$ <span id="resDecimoTerceiro"></span></p>
+            <p>Férias + 1/3 Constitucional: R$ <span id="resFerias"></span></p>
+            <p>Indenização (Art. 479 CLT): R$ <span id="resIndenizacao"></span></p>
+            <p><strong>Total Bruto das Verbas Rescisórias: R$ <span id="resValorBase"></span></strong></p>
+            <p>Desconto Estimado (INSS sobre Saldo de Salário e 13º Salário): R$ <span id="resDesconto"></span></p>
+            <p><strong>Valor Líquido Estimado a Receber: R$ <span id="resValorFinal"></span></strong></p>
+            <p><strong>FGTS (Estimativa para Saque): R$ <span id="resFGTS"></span></strong></p>
+            <p class="observacao" style="font-size: 0.9em; margin-top: 10px;">
+                <strong>Atenção:</strong> Estes valores são estimativas e podem ter uma margem de erro (geralmente entre 5% e 10%). Para um cálculo preciso e para evitar divergências, recomendamos consultar um profissional de Recursos Humanos (RH) ou um contador.
+            </p>
+</div>
+    </div>
+    </form>
+    <script src="js/script.js"></script>
+</body>
+</html>

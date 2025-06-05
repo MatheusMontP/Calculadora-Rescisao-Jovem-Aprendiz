@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgb(0, 75, 16);
+    padding: 20px 10px;
+}
+
+.botao {
+    background-color: #6baf4c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 5px;
+    width: 100%;
+}
+
+#formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 20px;
+    background-color: #f6f8ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    max-width: 800px;
+    width: 90%;
+}
+
+#formulario > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.titulo,
+#formulario > div:nth-child(2),
+.ferias,
+#qntdFeriasGrupo,
+#grupoMesesTrabalhados,
+.botao,
+#resultadosDecisao {
+    grid-column: 1 / -1;
+}
+
+#formulario label,
+#formulario .ferias p {
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 0;
+}
+#qntdFeriasGrupo {
+    display: none;
+}
+
+#formulario input[type="number"],
+#formulario select {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95em;
+    width: 100%;
+}
+
+#formulario input[type="radio"] {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.ferias {
+    align-items: center;
+}
+.ferias p {
+    margin-bottom: 4px;
+}
+
+.ferias label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+    font-size: 0.9em;
+}
+
+#resultadosDecisao {
+    background-color: #e9efff;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #caddff;
+}
+
+#resultadosDecisao h2 {
+    font-size: 1.2em;
+    color: #272727;
+    text-align: center;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 8px;
+}
+
+#resultadosDecisao p {
+    font-size: 0.9em;
+    color: #333;
+    line-height: 1.5;
+    margin: 0;
+    margin-bottom: 4px;
+}
+
+@media (max-width: 768px) {
+    #formulario {
+        grid-template-columns: 1fr;
+        gap: 15px 0;
+        padding: 15px;
+    }
+
+    #formulario input[type="number"],
+    #formulario select {
+        padding: 7px 9px;
+    }
+}
